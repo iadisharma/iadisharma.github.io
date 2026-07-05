@@ -23,13 +23,7 @@ const SITE_DATA = {
     roles: ["Backend Engineer", "AI-ML Engineer", "System Architect"],
     cta: { text: "View My Work", link: "projects.html" },
     ctaSecondary: { text: "Get In Touch", link: "contact.html" },
-    headshot: "assets/images/headshot.jpg",
-    stats: [
-      { value: "100K+", label: "Devices Managed" },
-      { value: "6", label: "Awards Won" },
-      { value: "1", label: "USPTO Patent" },
-      { value: "3+", label: "Years at Dell" }
-    ]
+    headshot: "assets/images/headshot.jpg"
   },
 
   about: {
@@ -216,7 +210,6 @@ const SITE_DATA = {
     subtitle: "Have a project idea, research collaboration, or just want to say hello? I'd love to hear from you.",
     formAction: "https://formspree.io/f/YOUR_FORM_ID",
     email: "iadisharmaofficial@gmail.com",
-    phone: "+91 6377273712",
     social: {
       linkedin: "https://linkedin.com/in/iadisharma",
       github: "https://github.com/iadisharma",

@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   requestAnimationFrame(() => {
     initScrollReveal();
-    if (page === 'home') initTypingEffect();
+    if (page === 'home') {
+      initTypingEffect();
+      initParticleCanvas();
+      initHeadshotTilt();
+    }
     if (page === 'gallery') initLightbox();
     if (page === 'contact') initContactForm();
   });
@@ -55,29 +59,33 @@ function renderFooter() {
 /* ── HOME ── */
 function renderHome() {
   const d = SITE_DATA.hero;
+  const techBadges = ['Python', 'Go', 'AI/ML', 'K8s', 'Azure', '.NET', 'React', 'Redis'];
   document.getElementById('page-content').innerHTML = `
     <section class="hero">
+      <canvas class="hero-canvas" id="hero-canvas"></canvas>
       <div class="container">
         <div class="hero-grid">
           <div class="hero-text page-enter">
             <p class="hero-greeting mono">${d.greeting}</p>
-            <h1 class="hero-name"><span class="gradient-text">${d.name}</span></h1>
+            <h1 class="hero-name"><span class="gradient-text glow-pulse">${d.name}</span></h1>
             <p class="hero-tagline">${d.tagline}</p>
             <div class="hero-roles"><span id="typed-role"></span><span class="cursor"></span></div>
             <div class="hero-ctas">
-              <a href="${d.cta.link}" class="btn btn-primary">${d.cta.text} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+              <a href="${d.cta.link}" class="btn btn-primary btn-shimmer">${d.cta.text} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
               <a href="${d.ctaSecondary.link}" class="btn btn-glass">${d.ctaSecondary.text}</a>
             </div>
           </div>
           <div class="hero-visual page-enter">
-            <div class="hero-headshot-wrap">
+            <div class="hero-headshot-wrap hero-3d-tilt" id="hero-tilt">
               <img src="${d.headshot}" alt="${d.name}" class="hero-headshot"
                    onerror="this.outerHTML='<div class=\\'hero-headshot-placeholder\\'>Add headshot.jpg<br>to assets/images/</div>'" />
+              <div class="headshot-ring"></div>
+              <div class="headshot-ring headshot-ring-2"></div>
+            </div>
+            <div class="floating-badges" id="floating-badges">
+              ${techBadges.map((b, i) => `<span class="floating-badge floating-badge-${i}">${b}</span>`).join('')}
             </div>
           </div>
-        </div>
-        <div class="hero-stats glass-static page-enter" style="margin-top: 56px;">
-          ${d.stats.map(s => `<div class="hero-stat"><div class="hero-stat-value">${s.value}</div><div class="hero-stat-label">${s.label}</div></div>`).join('')}
         </div>
       </div>
     </section>`;
@@ -94,26 +102,27 @@ function renderAbout() {
         <h1 class="page-title">${d.title}</h1>
         <p class="page-subtitle">${d.subtitle}</p>
       </div>
-      <div class="about-layout">
-        <div class="about-bio">
+      <div class="about-bio">
+        <div class="about-bio-text">
           ${d.summary.map(p => `<p>${p}</p>`).join('')}
-          <a href="${d.resumeLink}" target="_blank" class="btn btn-primary" download>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Resume
-          </a>
         </div>
-        <div>
-          <div class="skills-grid">
-            ${d.skills.map((s, i) => `
-              <div class="skill-card glass reveal reveal-d${Math.min(i + 1, 6)}">
-                <h4>${getSkillIcon(s.icon)} ${s.category}</h4>
-                <div class="skill-tags">${s.items.map(t => `<span class="skill-tag">${t}</span>`).join('')}</div>
-              </div>`).join('')}
-          </div>
+        <a href="${d.resumeLink}" target="_blank" class="btn btn-primary btn-shimmer" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+      </div>
+      <div class="skills-section">
+        <h3 class="skills-section-title">// technical skills</h3>
+        <div class="skills-grid">
+          ${d.skills.map((s, i) => `
+            <div class="skill-card glass reveal reveal-d${Math.min(i + 1, 6)}">
+              <h4>${getSkillIcon(s.icon)} ${s.category}</h4>
+              <div class="skill-tags">${s.items.map(t => `<span class="skill-tag">${t}</span>`).join('')}</div>
+            </div>`).join('')}
         </div>
       </div>
       <div class="leadership-section">
-        <h3>// leadership & community</h3>
+        <h3>// leadership &amp; community</h3>
         <div class="leadership-grid">
           ${ld.map((l, i) => `
             <div class="leadership-chip glass reveal reveal-d${Math.min(i + 1, 6)}">
@@ -351,15 +360,6 @@ function renderContact() {
               <div class="contact-info-value">${d.email}</div>
             </div>
           </div>
-          <div class="contact-info-card glass">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            </div>
-            <div>
-              <div class="contact-info-label">Phone</div>
-              <div class="contact-info-value">${d.phone}</div>
-            </div>
-          </div>
           <div class="social-links">
             <a href="${d.social.linkedin}" target="_blank" class="social-link glass" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -480,3 +480,223 @@ function showToast(msg) {
   t.classList.add('visible');
   setTimeout(() => t.classList.remove('visible'), 4000);
 }
+
+/* ── 3D PARTICLE CONSTELLATION ── */
+function initParticleCanvas() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles, mouse = { x: -9999, y: -9999 }, animId;
+  const isMobile = window.innerWidth < 768;
+  const isTablet = window.innerWidth < 1024;
+  const PARTICLE_COUNT = isMobile ? 35 : isTablet ? 65 : 110;
+  const CONNECT_DIST = isMobile ? 100 : 150;
+  const MOUSE_RADIUS = 180;
+  const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.z = Math.random() * 1.5 + 0.3; // depth: 0.3 to 1.8
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.baseSize = Math.random() * 2 + 0.8;
+      this.hue = Math.random() * 60 + 230; // 230–290 (indigo to purple)
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = Math.random() * 0.01 + 0.005;
+    }
+    update() {
+      // Mouse attraction
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MOUSE_RADIUS && dist > 0) {
+        const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS * 0.008;
+        this.vx += dx / dist * force;
+        this.vy += dy / dist * force;
+      }
+
+      // Damping
+      this.vx *= 0.995;
+      this.vy *= 0.995;
+
+      this.x += this.vx * this.z;
+      this.y += this.vy * this.z;
+      this.pulse += this.pulseSpeed;
+
+      // Wrap around
+      if (this.x < -20) this.x = W + 20;
+      if (this.x > W + 20) this.x = -20;
+      if (this.y < -20) this.y = H + 20;
+      if (this.y > H + 20) this.y = -20;
+    }
+    draw() {
+      const dark = isDark();
+      const pulseVal = Math.sin(this.pulse) * 0.3 + 0.7;
+      const size = this.baseSize * this.z * pulseVal;
+      const alpha = (0.3 + this.z * 0.35) * pulseVal;
+
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+      if (dark) {
+        ctx.fillStyle = `hsla(${this.hue}, 75%, 72%, ${alpha})`;
+      } else {
+        ctx.fillStyle = `hsla(${this.hue}, 65%, 55%, ${alpha * 0.7})`;
+      }
+      ctx.fill();
+
+      // Glow for larger particles
+      if (size > 1.8) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = dark
+          ? `hsla(${this.hue}, 80%, 65%, ${alpha * 0.08})`
+          : `hsla(${this.hue}, 60%, 50%, ${alpha * 0.05})`;
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawConnections() {
+    const dark = isDark();
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = CONNECT_DIST * ((particles[i].z + particles[j].z) / 2);
+
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.2 * ((particles[i].z + particles[j].z) / 3);
+          const avgHue = (particles[i].hue + particles[j].hue) / 2;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = dark
+            ? `hsla(${avgHue}, 70%, 68%, ${alpha})`
+            : `hsla(${avgHue}, 55%, 50%, ${alpha * 0.6})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Mouse connections
+    if (mouse.x > 0 && mouse.y > 0) {
+      for (let i = 0; i < particles.length; i++) {
+        const dx = particles[i].x - mouse.x;
+        const dy = particles[i].y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MOUSE_RADIUS) {
+          const alpha = (1 - dist / MOUSE_RADIUS) * 0.35;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = dark
+            ? `hsla(250, 85%, 75%, ${alpha})`
+            : `hsla(250, 70%, 55%, ${alpha * 0.5})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    animId = requestAnimationFrame(animate);
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+    animate();
+  }
+
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  // Touch support
+  window.addEventListener('touchmove', e => {
+    if (e.touches.length > 0) {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      resize();
+      // Re-position particles that are out of bounds
+      particles.forEach(p => {
+        if (p.x > W) p.x = Math.random() * W;
+        if (p.y > H) p.y = Math.random() * H;
+      });
+    }, 200);
+  });
+
+  init();
+}
+
+/* ── 3D HEADSHOT TILT ── */
+function initHeadshotTilt() {
+  const el = document.getElementById('hero-tilt');
+  if (!el || window.innerWidth < 768) return;
+
+  const maxTilt = 18;
+  let currentX = 0, currentY = 0, targetX = 0, targetY = 0;
+  let rafId;
+
+  el.addEventListener('mouseenter', () => {
+    el.style.transition = 'none';
+  });
+
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    targetX = ((e.clientY - cy) / (rect.height / 2)) * -maxTilt;
+    targetY = ((e.clientX - cx) / (rect.width / 2)) * maxTilt;
+  });
+
+  el.addEventListener('mouseleave', () => {
+    targetX = 0;
+    targetY = 0;
+    el.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+  });
+
+  function smoothTilt() {
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+    el.style.transform = `perspective(800px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+    rafId = requestAnimationFrame(smoothTilt);
+  }
+
+  smoothTilt();
+}
+

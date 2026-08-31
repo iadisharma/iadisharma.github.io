@@ -20,7 +20,7 @@ const SITE_DATA = {
     greeting: "Hi, I'm",
     name: "Adi Sharma",
     tagline: "I build digital products that scale.",
-    roles: ["Backend Engineer", "AI-ML Engineer", "System Architect"],
+    roles: ["Backend Engineer", "AI & LLM Engineer", "System Architect"],
     cta: { text: "View My Work", link: "projects.html" },
     ctaSecondary: { text: "Get In Touch", link: "contact.html" },
     headshot: "assets/images/headshot.jpg"
@@ -28,27 +28,28 @@ const SITE_DATA = {
 
   about: {
     title: "About Me",
-    subtitle: "Backend engineer by craft. AI-ML engineer by curiosity.",
+    subtitle: "Backend engineer by craft. AI & LLM engineer by curiosity.",
     summary: [
-      "I'm a Backend & AI-ML Engineer at Dell Technologies with a passion for building high-performance distributed systems and intelligent software. I specialize in designing scalable microservices, real-time data pipelines, and ML-driven solutions that serve hundreds of thousands of devices.",
-      "From architecting pub/sub systems handling 100K+ endpoints to building ML personalization engines that boosted engagement by 40%, I thrive at the intersection of backend engineering and applied AI. I hold a USPTO patent for an Agentic AI governance system and have been recognized with multiple Dell innovation awards."
+      "I'm a Backend & AI-ML Engineer at Dell Technologies building high-performance distributed systems and LLM-powered intelligent software. I specialize in designing scalable microservices, real-time data pipelines, and AI-driven solutions that serve hundreds of thousands of devices.",
+      "From building an LLM assistant on Llama 3.3 70B with 37 typed tools to architecting real-time command systems managing 100K+ endpoints, I thrive at the intersection of backend engineering and applied AI. I have 4 IPR filings at Dell Technologies and have been recognized with multiple innovation and excellence awards."
     ],
-    resumeLink: "docs/AS CV 21 April 2026.pdf",
+    resumeLink: "Adi_Sharma_CV_2026.pdf",
     skills: [
-      { category: "Languages", items: ["Python", "Go", "JavaScript/TypeScript", "C++", "PowerShell", "SQL"], icon: "code" },
-      { category: "AI / ML", items: ["TensorFlow", "PyTorch", "Scikit-learn", "XGBoost", "BERT", "LangChain"], icon: "brain" },
-      { category: "Backend", items: ["FastAPI", "Flask", "Node.js", "GraphQL", "ASP.NET Core", "SignalR"], icon: "server" },
-      { category: "Data & Infra", items: ["PostgreSQL", "MongoDB", "Redis", "RabbitMQ", "Elasticsearch", "TimescaleDB"], icon: "database" },
-      { category: "Cloud & DevOps", items: ["Azure", "Docker", "Kubernetes", "GitLab CI/CD", "GitHub Actions"], icon: "cloud" },
-      { category: "Frontend", items: ["React.js", "HTML/CSS", "Responsive Design"], icon: "layout" }
+      { category: "Languages", items: ["Python", "JavaScript/TypeScript", "Go", "C#", "SQL", "Bash"], icon: "code" },
+      { category: "AI & LLM Engineering", items: ["LLM tool calling", "Prompt engineering", "RAG", "pgvector", "Sentence-BERT", "LangChain", "LangGraph", "OCR", "PII masking"], icon: "brain" },
+      { category: "Machine Learning", items: ["PyTorch", "TensorFlow", "Scikit-learn", "XGBoost", "MLflow"], icon: "brain" },
+      { category: "Backend & Data", items: ["FastAPI", "Node.js", "Express", "React", "ASP.NET Core", "REST APIs", "OAuth2", "PostgreSQL", "SQLite", "MongoDB", "Redis", "RabbitMQ", "Elasticsearch"], icon: "server" },
+      { category: "Engineering Practices", items: ["Git", "GitLab CI/CD", "GitHub Actions", "Docker", "Kubernetes", "Testing", "Observability", "Canary releases", "Linux", "Azure"], icon: "cloud" }
     ],
     leadership: [
-      { role: "Google DSC Lead", org: "SMIT-SMU", period: "2022–2023" },
-      { role: "General Secretary", org: "CS Student Council, SMIT", period: "2022–2023" },
-      { role: "ML Mentor", org: "AI Club, SMIT", period: "2021–2023" },
-      { role: "Core Member", org: "GDG Bangalore", period: "2024–Present" },
-      { role: "Head of IT", org: "TEDxSMIT", period: "2022–2023" },
-      { role: "Volunteer", org: "NSS, SMIT", period: "2020–2022" }
+      { role: "Google DSC Lead", org: "SMIT-SMU", period: "2022-2023" },
+      { role: "General Secretary", org: "CS Student Council, SMIT", period: "2023" },
+      { role: "ML Mentor", org: "AI Club, SMIT", period: "2021-2022" },
+      { role: "Core Member & Event Organizer", org: "GDG Bangalore", period: "2024-Present" },
+      { role: "Head of IT", org: "TEDxSMIT", period: "2022-2023" },
+      { role: "Head of IT", org: "IAESTE SMU", period: "2022-2023" },
+      { role: "Tech Team Lead", org: "Smart India Hackathon", period: "2022" },
+      { role: "NSS Volunteer", org: "SMIT (Sikkim flood relief)", period: "2020-2023" }
     ]
   },
 
@@ -56,95 +57,110 @@ const SITE_DATA = {
     {
       role: "Software Development Engineer 2",
       company: "Dell Technologies",
-      location: "Bangalore, India",
+      location: "Bengaluru, India",
       period: "Jan 2026 – Present",
       current: true,
       highlights: [
-        "Architected a SignalR-based pub/sub system for real-time bidirectional communication with 100K+ enterprise endpoints.",
-        "Built a Native AOT agent achieving 91% binary size reduction and 74% faster cold starts for edge deployment.",
-        "Designed a real-time command dispatch pipeline enabling sub-second software operations across distributed endpoints."
+        "Developed the ITAssets Ops Copilot, an LLM assistant on Llama 3.3 70B that lets IT staff query employee, device and incident records in plain English through 37 typed tools, replacing manual lookups across five consoles.",
+        "Wrapped deterministic checks around every model decision — JSON schema validation, live database schema verification, permission enforcement at execution, and every write requires user confirmation with audit logging.",
+        "Built the employee profile service in Node.js/TypeScript merging 7 upstream sources (Workday, AD, ServiceNow, Intune, SCCM, Graph, org API) in parallel, serving 100K+ employees with a rule engine of 20+ contextual checks.",
+        "Designed 4-tier RBAC with Azure AD JWT auth, duplicate/double-approval safeguards, isolated email notifications, and full audit logging on every permission change.",
+        "Built a config-driven SQL engine letting partner teams expose new reporting endpoints via database config instead of code, with input sanitization and parameterized queries to prevent SQL injection."
       ],
-      tags: ["SignalR", "Native AOT", ".NET", "Distributed Systems"]
+      tags: ["TypeScript", "Node.js", "PostgreSQL", "pgvector", "LLM", "RAG", "Kubernetes"]
     },
     {
       role: "Software Development Engineer 1",
       company: "Dell Technologies",
-      location: "Bangalore, India",
+      location: "Bengaluru, India",
       period: "Aug 2024 – Dec 2025",
       highlights: [
-        "Built an ML-driven personalization engine increasing user engagement by 40% using collaborative filtering and NLP.",
-        "Developed Go microservices achieving 79% faster response times with concurrent processing and Redis caching.",
-        "Engineered a RabbitMQ-powered async pipeline processing 10,000 templated emails per minute.",
-        "Created a software inventory agent deployed to 100K+ devices for real-time asset tracking.",
-        "Co-authored a USPTO patent for an Agentic AI-driven software governance system.",
-        "Designed an RL-based adaptive task scheduler reducing resource contention by 33%."
+        "Built the real-time command plane for the Software Removal platform on SignalR and WebSockets with RabbitMQ as a durable second channel, managing 100,000+ Windows devices across 3 global regions at 99.7% success rate.",
+        "Paired it with a lightweight .NET agent cutting install size from 350 MB to 30 MB and installation time from 10 min to 30 seconds.",
+        "Built the software title normalization engine matching 16,000 vendor titles across 8 GB of inventory using fuzzy matching and TF-IDF at 75% accuracy, raising throughput from 2,400 to 16,000 records/hour.",
+        "Architected the FastAPI microservice for Dell Communique turning natural language briefs into structured email templates via an LLM gateway, lifting parse success from ~85 to 98% and cutting TTFT from 4s to 200ms with streaming.",
+        "Productionized Go analytics services parallelizing 3 PostgreSQL aggregations from ~25s to 6s, and built a survival model flagging users likely to disengage.",
+        "Built an RL scheduler learning device activity patterns to place inventory scans in idle windows, reaching 95% idle execution and lowering CPU impact from 28% to 6%."
       ],
-      tags: ["Go", "Python", "RabbitMQ", "ML", "Redis"]
+      tags: ["C#", "SignalR", "Go", "Python", "FastAPI", "RabbitMQ", "ML"]
     },
     {
       role: "Software Engineer Intern (Winter)",
       company: "Dell Technologies",
-      location: "Bangalore, India",
+      location: "Bengaluru, India",
       period: "Jan 2024 – May 2024",
       highlights: [
-        "Implemented semantic search using Elasticsearch and BERT embeddings for intelligent content discovery.",
-        "Built a recommendation system achieving 78% CTR improvement using hybrid collaborative-content filtering.",
-        "Drove CI/CD pipeline coverage from 58% to 94% and designed a GraphQL API reducing overfetching by 62%.",
-        "Contributed to the ATOM architecture — a modular microservices framework for internal platforms."
+        "Developed a semantic search engine over Elasticsearch using Sentence-BERT embeddings in a hybrid keyword/dense retrieval setup, fine-tuned on 12,000 queries, raising user satisfaction from 58 to 84%.",
+        "Built a hybrid recommendation system pairing matrix factorization with content-based filtering over TF-IDF, improving CTR from 23 to 41% with MLflow tracking A/B experiments.",
+        "Architected the training request workflow engine in Node.js, GraphQL and PostgreSQL as a state machine, and rebuilt CI/CD pipeline taking build success from 58 to 94% and build time from 45 min to 12 min."
       ],
-      tags: ["Elasticsearch", "BERT", "GraphQL", "CI/CD"]
+      tags: ["Elasticsearch", "Sentence-BERT", "GraphQL", "Node.js", "CI/CD"]
     },
     {
       role: "Software Engineer Intern (Summer)",
       company: "Dell Technologies",
-      location: "Bangalore, India",
+      location: "Bengaluru, India",
       period: "May 2023 – Jul 2023",
       highlights: [
-        "Built User360 — a unified dashboard aggregating data from 5+ sources using FastAPI and React.",
-        "Achieved 88% API latency reduction and 580% throughput increase through async processing and caching.",
-        "Deployed production-ready pipelines with GitLab CI/CD and Docker-based containerization."
+        "Engineered the User360 dashboard on FastAPI and React for TMX Data Platform, bringing API latency from 3.2s to 0.4s through query plan analysis, Redis caching at 76% hit rate and connection pooling.",
+        "Optimized retrieval over 500,000 records from 45s to 1.8s using table partitioning, cursor-based pagination and materialized views, scaling throughput from 50 to 340 RPS.",
+        "Architected the vendor budget ingestion pipeline in Express with Redis and a background worker, acknowledging multi-MB Excel uploads in under 500ms with row-level validation and cascading upserts across 4 relational tables."
       ],
-      tags: ["FastAPI", "React", "Docker", "GitLab CI/CD"]
+      tags: ["FastAPI", "React", "Redis", "PostgreSQL", "Express"]
     },
     {
       role: "Research Intern",
       company: "BITS Pilani",
-      location: "Remote",
+      location: "Pilani, India",
       period: "Jun 2022 – Aug 2022",
       highlights: [
-        "Developed a multi-robot coordination system using LSTM networks and the Hungarian algorithm.",
-        "Simulated autonomous task allocation across 10+ robots in ROS/Gazebo environments.",
-        "Optimized collision-free path planning for warehouse and disaster-response scenarios."
+        "Developed an AI-based coordination system for a heterogeneous robot fleet of rovers and drones, formulating resource management as a joint forecasting and assignment problem under hard energy constraints.",
+        "Designed an LSTM power-load forecasting model over telemetry time series reaching 90%+ accuracy with MAE under 5W.",
+        "Implemented the Hungarian algorithm for optimal task assignment with dynamic charging optimization, reaching 92% mission completion and 72% charging port utilization, validated in ROS and Gazebo."
       ],
-      tags: ["LSTM", "ROS", "Gazebo", "Robotics"]
+      tags: ["Python", "TensorFlow", "LSTM", "ROS", "Gazebo"]
     }
   ],
 
   projects: [
     {
-      title: "Software Management Agent",
-      description: "Enterprise-grade agent deployed to 100K+ devices for real-time software lifecycle management. Built with SignalR pub/sub, Native AOT compilation (91% size reduction), and real-time bidirectional command dispatch.",
-      tags: ["C#", ".NET", "SignalR", "Native AOT"],
+      title: "ITAssets Ops Copilot",
+      description: "LLM assistant on Llama 3.3 70B enabling IT staff to query employee, device and incident records in plain English through 37 typed tools. Features deterministic guardrails, RAG over IT policy docs with pgvector, 4-tier RBAC, and config-driven SQL engine.",
+      tags: ["TypeScript", "Node.js", "LLM", "RAG", "pgvector"],
+      icon: "brain",
+      links: {}
+    },
+    {
+      title: "Documentation Q&A Assistant",
+      description: "RAG-powered Q&A assistant over 600 pages of product and API documentation. Ingestion pipeline with OCR fallback indexing 4,800 chunks in pgvector. Four-step LangGraph flow (retrieve, draft, verify, answer) with React frontend. Achieved Recall@5 of 0.89 and cut unsupported claims from 14% to 4%.",
+      tags: ["Python", "LangChain", "LangGraph", "pgvector", "FastAPI"],
+      icon: "search",
+      links: {}
+    },
+    {
+      title: "Software Removal Platform",
+      description: "Real-time command and control plane on SignalR and WebSockets with RabbitMQ durable delivery, managing 100,000+ Windows devices across 3 global regions at 99.7% success rate. Lightweight .NET agent reduced install size from 350 MB to 30 MB.",
+      tags: ["C#", ".NET", "SignalR", "RabbitMQ"],
       icon: "monitor",
       links: {}
     },
     {
       title: "Dell Communique",
-      description: "High-throughput communication platform processing 10,000+ templated emails/min. RabbitMQ async pipeline with Go microservices, Redis caching, and ML-driven personalization achieving 40% engagement lift.",
-      tags: ["Go", "RabbitMQ", "Redis", "ML"],
+      description: "High-throughput communication platform with a FastAPI microservice turning natural language briefs into structured email templates via LLM gateway. Go analytics services parallelized 3 PostgreSQL aggregations from 25s to 6s. Survival model for user disengagement prediction.",
+      tags: ["Go", "FastAPI", "PostgreSQL", "ML"],
       icon: "mail",
       links: {}
     },
     {
       title: "DDoS Detection in SDN",
-      description: "Machine learning-based DDoS attack detection system for Software-Defined Networks achieving 98.88% accuracy. Built with Python, Scikit-learn, and XGBoost with real-time traffic classification.",
-      tags: ["Python", "Scikit-learn", "XGBoost", "Networking"],
+      description: "Intrusion detection system for software-defined networks with real-time feature extraction over OpenFlow statistics deriving 23 flow-level features at 89ms detection latency. Random Forest achieved 98.9% accuracy after grid search over 180 hyperparameter configurations. Throughput scaled from 15 to 560 flows/sec.",
+      tags: ["Python", "Scikit-learn", "OpenFlow", "Mininet"],
       icon: "shield",
       links: { github: "https://github.com/iadisharma" }
     },
     {
       title: "Image Captioning System",
-      description: "Deep learning pipeline generating natural language descriptions for images using ResNet50 encoder and Bi-LSTM decoder. Achieved BLEU-1 score of 0.61 with attention mechanisms.",
+      description: "End-to-end captioning pipeline pairing ResNet50/VGG16 vision encoders with LSTM decoders for visually impaired users. Achieved BLEU-1 of 0.61 with ResNet50 + Bi-LSTM. Deployed as Flask app with text-to-speech returning spoken captions in real-time.",
       tags: ["TensorFlow", "ResNet50", "Bi-LSTM", "Flask"],
       icon: "image",
       links: { github: "https://github.com/iadisharma" }
@@ -158,7 +174,7 @@ const SITE_DATA = {
     },
     {
       title: "Autonomous GPS Drone",
-      description: "Autonomous drone system with GPS waypoint navigation and obstacle avoidance. Built on ArduPilot with custom firmware. Won 1st Prize at IETE National Robotics Competition.",
+      description: "Autonomous drone system with GPS waypoint navigation and obstacle avoidance. Built on ArduPilot with custom firmware. Won 2nd Position at IETE National Robotics Competition.",
       tags: ["ArduPilot", "C++", "GPS", "Robotics"],
       icon: "drone",
       links: {}
@@ -167,29 +183,73 @@ const SITE_DATA = {
 
   patents: [
     {
-      title: "Agentic AI-Driven Persona-Based Software Removal and Governance System",
-      authority: "USPTO (United States Patent and Trademark Office)",
-      status: "Filed",
+      title: "On-Device Privacy-Preserving Prompt Refinement Using Cluster-Conditioned Local Agents",
+      authority: "Dell Technologies",
+      status: "IPR Filed",
       filedBy: "Dell Technologies",
-      claims: 10,
-      description: "A novel system integrating agentic AI with persona-based governance for automated software lifecycle management across enterprise environments. Features a 6-layer architecture including contextual analysis, persona-based decision engine, agentic AI action layer, federated learning, and explainable AI modules.",
+      year: "2026",
+      description: "On-device small language model prompt compiler using a typed intermediate representation and a 17-operation edit DSL, with federated learning based on differentially private, noised rule-outcome histograms and two companion filings.",
+      keyInnovations: [
+        "On-device SLM prompt compiler with typed intermediate representation",
+        "17-operation edit DSL for prompt refinement",
+        "Federated learning with differentially private histograms",
+        "Privacy-preserving architecture — no raw prompts leave the device"
+      ]
+    },
+    {
+      title: "PSF-Based Display Pre-Compensation with Integrated Wavefront Sensing and Vision-Aware Biometric Authentication",
+      authority: "Dell Technologies",
+      status: "IPR Filed",
+      filedBy: "Dell Technologies",
+      year: "2026",
+      description: "Display pre-compensation system integrating point spread function (PSF) modeling, wavefront sensing, and vision-aware biometric authentication.",
+      keyInnovations: [
+        "Point spread function (PSF) based display correction",
+        "Integrated wavefront sensing pipeline",
+        "Vision-aware biometric authentication",
+        "Adaptive display pre-compensation"
+      ]
+    },
+    {
+      title: "Behavioral Graph Query Disambiguation",
+      authority: "Dell Technologies",
+      status: "IPR Filed",
+      filedBy: "Dell Technologies",
+      year: "2026",
+      description: "Graph-based approach for resolving ambiguity in user queries using behavioral context and interaction signals.",
+      keyInnovations: [
+        "Graph-based query disambiguation framework",
+        "Behavioral context integration for intent resolution",
+        "Interaction signal modeling for ambiguity reduction",
+        "Context-aware query interpretation"
+      ]
+    },
+    {
+      title: "Agentic AI System for Software Removal Governance",
+      authority: "Dell Technologies",
+      status: "IPR Filed",
+      filedBy: "Dell Technologies",
+      year: "2025",
+      description: "Agentic AI framework for software removal governance combining XGBoost-based risk prediction, K-Means persona classification, and Isolation Forest anomaly detection for automated software lifecycle management across enterprise environments.",
       keyInnovations: [
         "Agentic AI decision engine with autonomous software management",
-        "Persona-based action layer for role-specific governance policies",
-        "Federated learning for cross-organizational intelligence without data exposure",
-        "Explainable AI module providing transparent decision audit trails",
-        "Multi-stakeholder governance with adaptive compliance frameworks"
+        "XGBoost-based risk prediction for removal decisions",
+        "K-Means persona classification for role-specific governance",
+        "Isolation Forest anomaly detection for compliance monitoring",
+        "Explainable AI module providing transparent decision audit trails"
       ]
     }
   ],
 
   awards: [
-    { title: "Dell Innovation Award", year: "2025", issuer: "Dell Technologies", description: "Recognized for the USPTO patent contribution — Agentic AI-Driven Software Governance System.", icon: "trophy" },
-    { title: "Dell Extraordinary Award", year: "2025", issuer: "Dell Technologies", description: "Awarded for exceptional contributions to the Software Inventory Agent serving 100K+ endpoints.", icon: "star" },
-    { title: "Dell Bravo Award", year: "2025", issuer: "Dell Technologies", description: "Recognized for outstanding work on ML personalization engine and Go microservices optimization.", icon: "zap" },
-    { title: "Google DSC Lead", year: "2022–2023", issuer: "Google Developers", description: "Selected as 1 of 560 Google Developer Student Club Leads across India. Organized workshops and hackathons.", icon: "users" },
-    { title: "Dell Hack-2-Hire Winner", year: "2022", issuer: "Dell Technologies", description: "Won the national-level hackathon leading to a full-time offer at Dell Technologies.", icon: "award" },
-    { title: "IETE Robotics — 2nd Position", year: "2019", issuer: "IETE", description: "Built an autonomous GPS drone with waypoint navigation. Secured 2nd position nationally.", icon: "medal" }
+    { title: "Dell Innovation Award", year: "2025", issuer: "Dell Technologies", description: "For the real-time SignalR agent behind the Software Governance System managing over 100,000 devices.", icon: "trophy" },
+    { title: "Dell Extraordinary Award (x2)", year: "2025", issuer: "Dell Technologies", description: "Awarded twice — for the Software Inventory Agent deployed globally across 100,000 devices, reducing unauthorized software titles from 4,100 to 1,800.", icon: "star" },
+    { title: "Dell Bravo Award", year: "2026 & 2025", issuer: "Dell Technologies", description: "For the ITAssets Ops Copilot agentic platform, and for ML personalization features delivered on tight timelines for Dell Communique.", icon: "zap" },
+    { title: "Dean's List", year: "2023", issuer: "Sikkim Manipal University", description: "Awarded for academic merit during B.Tech in Computer Science and Engineering.", icon: "award" },
+    { title: "Birla Education Trust Scholarship", year: "2020", issuer: "Birla Education Trust", description: "Academic excellence scholarship of Rs. 25,000 for outstanding performance.", icon: "award" },
+    { title: "Google DSC Lead", year: "2022-2023", issuer: "Google Developers", description: "Selected as 1 of 560 Google Developer Student Club Leads across India. Led Sikkim's sole GDSC, organizing workshops for 500+ students.", icon: "users" },
+    { title: "Dell Hack-2-Hire Winner", year: "2022", issuer: "Dell Technologies", description: "Built a computer vision and language generation model converting images into spoken descriptions as assistive technology for visually impaired users.", icon: "award" },
+    { title: "IETE Innovation Challenge — 2nd Position", year: "2019", issuer: "IETE", description: "Built an autonomous FPV rover for ranging and surveillance at the Institution of Electronics and Telecommunication Engineers challenge.", icon: "medal" }
   ],
 
   gallery: {
@@ -209,11 +269,14 @@ const SITE_DATA = {
     title: "Let's Connect",
     subtitle: "Have a project idea, research collaboration, or just want to say hello? I'd love to hear from you.",
     formAction: "https://formspree.io/f/YOUR_FORM_ID",
-    email: "iadisharmaofficial@gmail.com",
+    phone: "+91 6377273712",
+    email: "reachadisharma6@gmail.com",
+    website: "https://iadisharma.github.io",
     social: {
       linkedin: "https://linkedin.com/in/iadisharma",
       github: "https://github.com/iadisharma",
-      email: "mailto:iadisharmaofficial@gmail.com"
+      website: "https://iadisharma.github.io",
+      email: "mailto:reachadisharma6@gmail.com"
     }
   },
 

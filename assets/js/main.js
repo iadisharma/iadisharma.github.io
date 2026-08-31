@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     patents: renderPatents,
     awards: renderAwards,
     gallery: renderGallery,
-    contact: renderContact
+    contact: renderContact,
+    'cv-doc': renderCvDoc
   };
 
   if (renderers[page]) renderers[page]();
@@ -59,7 +60,7 @@ function renderFooter() {
 /* ── HOME ── */
 function renderHome() {
   const d = SITE_DATA.hero;
-  const techBadges = ['Python', 'Go', 'AI/ML', 'K8s', 'Azure', '.NET', 'React', 'Redis'];
+  const techBadges = ['Python', 'LLM', 'RAG', 'K8s', 'Go', 'Node.js', 'React', 'Azure'];
   document.getElementById('page-content').innerHTML = `
     <section class="hero">
       <canvas class="hero-canvas" id="hero-canvas"></canvas>
@@ -215,7 +216,9 @@ function getProjectIcon(type) {
     shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',
-    drone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/></svg>'
+    drone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/></svg>',
+    brain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/><path d="M9 21h6M10 17v4M14 17v4"/></svg>',
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>'
   };
   return `<svg width="52" height="52" viewBox="0 0 24 24">${(icons[type] || icons.monitor).replace(/<\/?svg[^>]*>/g, '')}</svg>`;
 }
@@ -236,14 +239,14 @@ function renderPatents() {
       <div class="page-header">
         <p class="section-label">// patents</p>
         <h1 class="page-title">Intellectual Property</h1>
-        <p class="page-subtitle">Innovations filed and recognized at the patent office.</p>
+        <p class="page-subtitle">IPR filings and innovations at Dell Technologies.</p>
       </div>
       ${d.map(p => `
         <div class="patent-card glass-static reveal">
           <div class="patent-glow"></div>
           <span class="patent-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            ${p.status} · ${p.claims} Claims
+            ${p.status} · ${p.year}
           </span>
           <h2 class="patent-title">${p.title}</h2>
           <p class="patent-meta">${p.authority} · Filed by ${p.filedBy}</p>
@@ -353,11 +356,29 @@ function renderContact() {
         <div class="contact-info-side">
           <div class="contact-info-card glass">
             <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Phone</div>
+              <div class="contact-info-value"><a href="tel:${d.phone}">${d.phone}</a></div>
+            </div>
+          </div>
+          <div class="contact-info-card glass">
+            <div class="contact-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
             </div>
             <div>
               <div class="contact-info-label">Email</div>
-              <div class="contact-info-value">${d.email}</div>
+              <div class="contact-info-value"><a href="mailto:${d.email}">${d.email}</a></div>
+            </div>
+          </div>
+          <div class="contact-info-card glass">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Website</div>
+              <div class="contact-info-value"><a href="${d.website}" target="_blank">iadisharma.github.io</a></div>
             </div>
           </div>
           <div class="social-links">
@@ -367,11 +388,41 @@ function renderContact() {
             <a href="${d.social.github}" target="_blank" class="social-link glass" aria-label="GitHub">
               ${svgGithub()}
             </a>
+            <a href="${d.social.website}" target="_blank" class="social-link glass" aria-label="Website">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </a>
             <a href="${d.social.email}" class="social-link glass" aria-label="Email">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
             </a>
           </div>
         </div>
+      </div>
+    </div>`;
+}
+
+/* ── CV VIEWER ── */
+function renderCvDoc() {
+  document.getElementById('page-content').innerHTML = `
+    <div class="container page-enter">
+      <div class="page-header">
+        <p class="section-label">// curriculum vitae</p>
+        <h1 class="page-title">Adi Sharma</h1>
+        <p class="page-subtitle">Backend & AI-ML Engineer · Dell Technologies</p>
+      </div>
+      <div class="cv-viewer-card glass-static">
+        <div class="cv-viewer-toolbar">
+          <span class="cv-viewer-label">Adi_Sharma_CV_2026.pdf</span>
+          <a href="Adi_Sharma_CV_2026.pdf" download class="btn btn-primary btn-shimmer" style="font-size:0.82rem;padding:8px 20px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+        </div>
+        <div class="cv-viewer-embed">
+          <iframe src="Adi_Sharma_CV_2026.pdf" title="Adi Sharma CV" class="cv-iframe"></iframe>
+        </div>
+        <noscript>
+          <p style="text-align:center;padding:40px;">Your browser does not support inline PDF viewing. <a href="Adi_Sharma_CV_2026.pdf" download>Download the PDF</a>.</p>
+        </noscript>
       </div>
     </div>`;
 }

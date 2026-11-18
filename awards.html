@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Awards and achievements of Adi Sharma — Dell Innovation, Hack-2-Hire, and more." />
+  <meta name="description" content="Awards and recognition from industry, academia and the developer community." />
+  <meta name="author" content="Adi Sharma" />
+  <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#08080b" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Awards | Adi Sharma" />
+  <meta property="og:description" content="Awards and recognition from industry, academia and the developer community." />
+  <meta property="og:type" content="website" />
   <title>Awards | Adi Sharma</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%234f46e5'/><text x='16' y='22.5' font-family='ui-monospace,monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'>A</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
+
 <body data-page="awards">
-  <div class="bg-effects" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-  <nav class="nav" id="nav"></nav>
-  <div class="mobile-nav glass-strong" id="mobile-nav"></div>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav" aria-label="Main navigation"></nav>
+  <div class="mobile-nav" id="mobile-nav"></div>
   <div class="mobile-backdrop" id="mobile-backdrop"></div>
+
   <main class="page-wrap" id="page-content"></main>
   <footer class="footer" id="footer"></footer>
-  <div class="toast" id="toast"></div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
+
 </html>

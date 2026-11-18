@@ -159,14 +159,6 @@ function renderHome() {
             </div>
           </div>
         </div>
-
-        <div class="hero-stats page-enter">
-          ${d.stats.map(s => `
-            <div class="hero-stat">
-              <div class="hero-stat-value">${s.value}</div>
-              <div class="hero-stat-label">${s.label}</div>
-            </div>`).join('')}
-        </div>
       </div>
     </section>`;
 }

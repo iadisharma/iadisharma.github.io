@@ -23,13 +23,7 @@ const SITE_DATA = {
     tagline: "I build high-throughput backend systems and enterprise AI that holds up in production. Order fulfilment across 170+ countries, platforms managing 100,000+ devices.",
     cta: { text: "View My Work", link: "projects.html" },
     ctaSecondary: { text: "Get In Touch", link: "contact.html" },
-    headshot: "assets/images/headshot.jpg",
-    stats: [
-      { value: "170+", label: "Countries served" },
-      { value: "100K+", label: "Devices managed" },
-      { value: "4", label: "IPR filings" },
-      { value: "2+", label: "Years shipping" }
-    ]
+    headshot: "assets/images/headshot.jpg"
   },
 
   about: {

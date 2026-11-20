@@ -155,7 +155,7 @@ function renderHome() {
           <div class="hero-visual page-enter">
             <div class="hero-headshot-wrap">
               <img src="${d.headshot}" alt="Portrait of ${d.name}" class="hero-headshot"
-                   onerror="this.outerHTML='<div class=\\'hero-headshot-placeholder\\'>headshot.jpg<br>assets/images/</div>'" />
+                   onerror="this.outerHTML='<div class=\\'hero-headshot-placeholder\\'>portrait<br>assets/images/</div>'" />
             </div>
           </div>
         </div>
@@ -373,9 +373,10 @@ function renderInterviews() {
 
             ${e.note ? `<p class="iv-note">${e.note}</p>` : ''}
 
-            <a href="${e.link}" target="_blank" rel="noopener" class="iv-link">
-              Read the full write-up on GeeksforGeeks ${icon('external', 13)}
-            </a>
+            ${e.link ? `
+              <a href="${e.link}" target="_blank" rel="noopener" class="iv-link">
+                Read the full write-up on GeeksforGeeks ${icon('external', 13)}
+              </a>` : ''}
           </article>`).join('')}
       </div>
     </div>`;

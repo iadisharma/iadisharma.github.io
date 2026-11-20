@@ -23,7 +23,9 @@ const SITE_DATA = {
     tagline: "I build high-throughput backend systems and enterprise AI that holds up in production. Order fulfilment across 170+ countries, platforms managing 100,000+ devices.",
     cta: { text: "View My Work", link: "projects.html" },
     ctaSecondary: { text: "Get In Touch", link: "contact.html" },
-    headshot: "assets/images/headshot.jpg"
+    // assets/images/adi_sharma.jpg (DevFest 2025), full original height,
+    // cropped horizontally only to fit the 4:5 frame. Original kept alongside.
+    headshot: "assets/images/adi-sharma-headshot.jpg"
   },
 
   about: {
@@ -311,14 +313,31 @@ const SITE_DATA = {
 
   interviews: {
     title: "Interview Experiences",
-    subtitle: "Write-ups I authored on GeeksforGeeks, documenting on-campus hiring rounds end to end.",
+    subtitle: "On-campus hiring drives, documented round by round from the first screen through to the offer.",
     entries: [
+      {
+        company: "Dell Technologies",
+        role: "Software Engineer Intern and Software Engineer 1",
+        mode: "On-Campus",
+        date: "Oct 2022",
+        location: "Dell Technologies ISPL, Bengaluru, India",
+        outcome: "Selected",
+        result: "offer",
+        note: "One drive, three outcomes: the summer 2023 internship, the winter 2024 internship, and the full-time Software Engineer I offer that followed.",
+        summary: "A hiring drive run as a 48-hour team hackathon rather than a standard interview loop, with an online assessment in front of it and an HR call behind it.",
+        rounds: [
+          { name: "Online Assessment", detail: "Aptitude, CS fundamentals (OOP, DBMS, OS and networking) and two coding questions at easy to medium level on arrays, strings and basic logic. The MCQs moved fast and leaned on tricky output-based snippets, so solid fundamentals counted for more than speed." },
+          { name: "Team Formation and Problem Selection", detail: "Shortlisted candidates were grouped into teams of four to five and given a list of real-world problem statements covering recommendation engines, supply chain tools and smart chatbots. A short Q&A with Dell engineers clarified expectations before each team locked in its statement." },
+          { name: "48-Hour Hackathon, Technical Presentation & Interview", detail: "Roughly 48 hours to build a working prototype from scratch. Dell engineers checked in through the build and gave practical architectural feedback that was worth acting on before the final demo. Selection stayed individual despite the team format: the panel questioned each person on the exact modules they wrote, why they chose a particular database or framework, and how the solution would scale." },
+          { name: "HR Interview", detail: "A 30-minute conversational call once hackathon results were out. My specific role on the team, how we handled disagreements over the 48 hours, why Dell, and location preference between Bengaluru and Hyderabad." }
+        ]
+      },
       {
         company: "Keysight Technologies",
         role: "R&D Software Intern",
         mode: "On-Campus",
         date: "May 2023",
-        location: "Kolkata, India",
+        location: "Gurugram, India",
         outcome: "Selected",
         result: "offer",
         note: "Offer letter within a week of the final HR round.",
@@ -333,13 +352,13 @@ const SITE_DATA = {
       },
       {
         company: "Microsoft",
-        role: "Associate Consultant Intern",
+        role: "Associate Technical Consultant Intern + FTE",
         mode: "On-Campus",
         date: "Aug 2022",
-        location: "Microsoft India Global Delivery",
-        outcome: "Not selected",
-        result: "miss",
-        note: "8 students were selected. Biggest lesson: treat the HR round as seriously as the technical ones.",
+        location: "Microsoft India Global Delivery, Hyderabad, India",
+        outcome: "Selected",
+        result: "offer",
+        note: "8 students were selected from the cohort of 25.",
         summary: "Resume and CGPA screening narrowed the cohort to 25 CS/IT students, every one of them above 8 CGPA.",
         rounds: [
           { name: "Shortlisting", detail: "Resume and CGPA screening by the TPO. 25 students selected, all above 8 CGPA. An ATS-friendly one-page resume mattered." },

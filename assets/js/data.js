@@ -19,7 +19,12 @@ const SITE_DATA = {
   hero: {
     greeting: "Hi, I'm",
     name: "Adi Sharma",
-    title: { current: "Software Engineer II @ Nike", past: "Ex-Dell Technologies" },
+    title: {
+      current: "Software Engineer II @ Nike",
+      past: "Ex-Dell Technologies",
+      currentLogo: { src: "assets/images/logos/nike.svg", name: "Nike" },
+      pastLogo: { src: "assets/images/logos/dell.svg", name: "Dell Technologies" }
+    },
     tagline: "I build high-throughput backend systems and enterprise AI that holds up in production. Order fulfilment across 170+ countries, platforms managing 100,000+ devices.",
     cta: { text: "View My Work", link: "projects.html" },
     ctaSecondary: { text: "Get In Touch", link: "contact.html" },
@@ -61,6 +66,7 @@ const SITE_DATA = {
   experience: [
     {
       company: "Nike",
+      logo: "assets/images/logos/nike.svg",
       location: "Bengaluru, India",
       span: "Oct 2026 - Present",
       current: true,
@@ -82,6 +88,7 @@ const SITE_DATA = {
     },
     {
       company: "Dell Technologies",
+      logo: "assets/images/logos/dell.svg",
       location: "Bengaluru, India",
       span: "Aug 2024 - Sep 2026 · 2 yrs 2 mos",
       roles: [
@@ -154,6 +161,7 @@ const SITE_DATA = {
     },
     {
       company: "BITS Pilani",
+      logo: "assets/images/logos/bits-pilani.png",
       location: "Pilani, India",
       span: "Jun 2022 - Aug 2022",
       roles: [

@@ -1463,6 +1463,248 @@ button { font: inherit; }
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0 / 20px 20px;
 }
 
+/* ── FILES ────────────────────── */
+
+.files-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-bottom: 14px;
+}
+
+.files-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  max-width: 340px;
+}
+
+.files-search-icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.files-search input {
+  width: 100%;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--text);
+  padding: 10px 14px 10px 36px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  transition: border-color var(--t), box-shadow var(--t);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.files-search input::placeholder { color: var(--text-3); }
+
+.files-search input:focus {
+  outline: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.files-search input:focus-visible { outline: none; }
+
+/* The native clear button is drawn by the browser in its own colour and
+   disappears entirely in dark mode, so the search resets by deletion. */
+.files-search input::-webkit-search-decoration,
+.files-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+.files-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.files-chip {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  padding: 6px 12px;
+  color: var(--text-3);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.files-chip:hover { color: var(--text); border-color: var(--text-3); }
+
+.files-chip.is-on {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+.files-count {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-soft);
+  margin-bottom: 32px;
+}
+
+.files-list { display: flex; flex-direction: column; gap: 34px; }
+
+.files-group[hidden] { display: none; }
+
+.files-group-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+
+/* The rule runs out from the label to the edge, so a month reads as a band
+   across the list rather than as another heading in the stack. */
+.files-group-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line-soft);
+}
+
+.files-rows { display: flex; flex-direction: column; gap: 10px; }
+
+.file-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.file-row[hidden] { display: none; }
+
+.file-kind {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  color: var(--kind, var(--text-2));
+  background: color-mix(in srgb, var(--kind, var(--text-3)) 9%, transparent);
+  transition: all var(--t);
+}
+
+.file-row:hover .file-kind { border-color: color-mix(in srgb, var(--kind, var(--text-3)) 35%, transparent); }
+
+.file-kind--red    { --kind: #dc2626; }
+.file-kind--blue   { --kind: #2563eb; }
+.file-kind--green  { --kind: #15803d; }
+.file-kind--amber  { --kind: #c2410c; }
+.file-kind--violet { --kind: #7c3aed; }
+.file-kind--slate  { --kind: #64748b; }
+
+[data-theme="dark"] .file-kind--red    { --kind: #f87171; }
+[data-theme="dark"] .file-kind--blue   { --kind: #60a5fa; }
+[data-theme="dark"] .file-kind--green  { --kind: #4ade80; }
+[data-theme="dark"] .file-kind--amber  { --kind: #fb923c; }
+[data-theme="dark"] .file-kind--violet { --kind: #a78bfa; }
+[data-theme="dark"] .file-kind--slate  { --kind: #94a3b8; }
+
+.file-main { flex: 1; min-width: 0; }
+
+.file-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.file-title a { transition: color var(--t); }
+.file-row:hover .file-title a { color: var(--accent); }
+
+.file-desc {
+  font-size: 0.865rem;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin-top: 4px;
+  max-width: 68ch;
+}
+
+.file-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+  margin-top: 7px;
+}
+
+.file-dot { opacity: 0.55; }
+
+.file-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+
+.file-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.79rem;
+  font-weight: 550;
+  padding: 7px 13px;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  white-space: nowrap;
+  transition: all var(--t);
+}
+
+.file-btn:hover { color: var(--text); border-color: var(--text-3); background: var(--line-soft); }
+
+.file-btn--solid {
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.file-btn--solid:hover {
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+
+.files-empty {
+  font-size: 0.9rem;
+  color: var(--text-3);
+  padding: 34px 0;
+  text-align: center;
+}
+
+.files-empty[hidden] { display: none; }
+
+
 /* ── CONTACT ────────────────────────────── */
 
 .contact-layout {
@@ -1663,6 +1905,10 @@ a.contact-row:hover .contact-value { color: var(--accent); }
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%) translateY(140%);
+  /* 140% of its own height leaves a sliver on tall viewports, and an empty
+     toast is shorter still, so it is also faded and made inert while idle. */
+  opacity: 0;
+  pointer-events: none;
   padding: 12px 20px;
   font-size: 0.85rem;
   font-weight: 500;
@@ -1671,12 +1917,12 @@ a.contact-row:hover .contact-value { color: var(--accent); }
   border-radius: var(--r-sm);
   box-shadow: var(--shadow-3);
   z-index: 300;
-  transition: transform 320ms var(--ease);
+  transition: transform 320ms var(--ease), opacity 200ms var(--ease);
   max-width: calc(100% - 40px);
   text-align: center;
 }
 
-.toast.visible { transform: translateX(-50%) translateY(0); }
+.toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
 /* ── REVEAL ─────────────────────────────── */
 
@@ -1696,12 +1942,16 @@ a.contact-row:hover .contact-value { color: var(--accent); }
 .reveal-d6 { transition-delay: 265ms; }
 
 /* On wide screens the experience page gets a roomier column than the rest of
-   the site, and the bullets are allowed a longer measure, so the text block
-   does not trail off well short of the full-width company rule above it. */
+   the site. The container needs an explicit width because .page-wrap is a
+   column flexbox and the auto side margins stop the item from stretching, so
+   without this it shrink-wraps to its content and ignores max-width entirely.
+   The measure caps go up to match, otherwise the bullets would trail off well
+   short of the full-width rule under each company name. */
 @media (min-width: 1140px) {
-  body[data-page="experience"] #page-content > .container { max-width: 1240px; }
+  body[data-page="experience"] #page-content > .container { width: 100%; max-width: 1100px; }
   .xp-summary { max-width: 86ch; }
-  .xp-list li { max-width: 94ch; }
+  .xp-list li { max-width: 92ch; }
+  body[data-page="files"] #page-content > .container { width: 100%; max-width: 900px; }
 }
 
 /* ── RESPONSIVE ─────────────────────────── */
@@ -1716,6 +1966,11 @@ a.contact-row:hover .contact-value { color: var(--accent); }
 
 @media (max-width: 768px) {
   .container { padding: 0 20px; }
+  /* The buttons drop under the text and line up with it, rather than
+     squeezing the title into a two-word column. */
+  .file-row { flex-wrap: wrap; }
+  .file-actions { width: 100%; padding-left: 54px; }
+  .files-search { max-width: none; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .nav { padding: 0 8px 0 16px; }
@@ -1738,6 +1993,9 @@ a.contact-row:hover .contact-value { color: var(--accent); }
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
+  .file-row { padding: 16px; gap: 13px; }
+  .file-actions { padding-left: 0; }
+  .file-btn { flex: 1; justify-content: center; }
   .gallery-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; align-items: stretch; }
   .award-row { gap: 14px; }

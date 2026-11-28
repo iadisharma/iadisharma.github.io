@@ -13,6 +13,9 @@ const SITE_DATA = {
     { label: "Awards", href: "awards.html", page: "awards" },
     { label: "Interviews", href: "interviews.html", page: "interviews" },
     { label: "Gallery", href: "gallery.html", page: "gallery" },
+    /* files/ is deliberately absent: the page is reachable only by typing
+       the URL. Add { label: "Files", href: "files/", page: "files" } here
+       to put it back in the header and the mobile menu. */
     { label: "Contact", href: "contact.html", page: "contact" }
   ],
 

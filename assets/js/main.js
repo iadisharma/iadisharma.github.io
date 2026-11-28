@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     awards: renderAwards,
     interviews: renderInterviews,
     gallery: renderGallery,
+    files: renderFiles,
     contact: renderContact,
     'cv-doc': renderCvDoc
   };
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(() => {
     initScrollReveal();
     if (page === 'gallery') initLightbox();
+    if (page === 'files') initFilesFilter();
     if (page === 'contact') initContactForm();
   });
 });
@@ -474,6 +476,209 @@ function renderGallery() {
 }
 
 /* ── CONTACT ────────────────────────────── */
+
+/* ── FILES ──────────────────────────────── */
+
+/* How each extension is badged. Anything unrecognised falls back to the
+   extension in capitals with a generic document glyph, so a file type nobody
+   anticipated still renders as something rather than a blank square. */
+const FILE_KIND = {
+  pdf:  { label: 'PDF',     icon: 'doc',     tone: 'red' },
+  doc:  { label: 'DOC',     icon: 'doc',     tone: 'blue' },
+  docx: { label: 'DOC',     icon: 'doc',     tone: 'blue' },
+  rtf:  { label: 'DOC',     icon: 'doc',     tone: 'blue' },
+  ppt:  { label: 'SLIDES',  icon: 'monitor', tone: 'amber' },
+  pptx: { label: 'SLIDES',  icon: 'monitor', tone: 'amber' },
+  key:  { label: 'SLIDES',  icon: 'monitor', tone: 'amber' },
+  xls:  { label: 'SHEET',   icon: 'chart',   tone: 'green' },
+  xlsx: { label: 'SHEET',   icon: 'chart',   tone: 'green' },
+  csv:  { label: 'SHEET',   icon: 'chart',   tone: 'green' },
+  txt:  { label: 'TEXT',    icon: 'book',    tone: 'slate' },
+  md:   { label: 'TEXT',    icon: 'book',    tone: 'slate' },
+  json: { label: 'DATA',    icon: 'code',    tone: 'slate' },
+  zip:  { label: 'ARCHIVE', icon: 'package', tone: 'violet' },
+  png:  { label: 'IMAGE',   icon: 'image',   tone: 'violet' },
+  jpg:  { label: 'IMAGE',   icon: 'image',   tone: 'violet' },
+  jpeg: { label: 'IMAGE',   icon: 'image',   tone: 'violet' },
+  gif:  { label: 'IMAGE',   icon: 'image',   tone: 'violet' },
+  webp: { label: 'IMAGE',   icon: 'image',   tone: 'violet' },
+  svg:  { label: 'IMAGE',   icon: 'image',   tone: 'violet' }
+};
+
+function fileKind(ext) {
+  return FILE_KIND[String(ext || '').toLowerCase()] ||
+         { label: String(ext || 'file').toUpperCase(), icon: 'doc', tone: 'slate' };
+}
+
+/* Filenames and descriptions come off the file system rather than from the
+   hand-written data file, so they get escaped before going into an attribute. */
+function escAttr(v) {
+  return String(v)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function fmtBytes(n) {
+  const b = Number(n);
+  if (!isFinite(b) || b < 0) return '';
+  if (b < 1024) return b + ' B';
+  const kb = b / 1024;
+  if (kb < 1024) return Math.round(kb) + ' KB';
+  return (kb / 1024).toFixed(1) + ' MB';
+}
+
+const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+/* Formatted off the YYYY-MM-DD string rather than through Date, so the label
+   cannot drift a day across timezones and reads the same in every browser,
+   whatever locale the visitor is on. */
+function fileDateParts(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+  if (!m) return { day: String(iso || ''), month: 'Undated' };
+  const year = m[1];
+  const mi = Number(m[2]) - 1;
+  const day = Number(m[3]);
+  if (mi < 0 || mi > 11) return { day: String(iso), month: 'Undated' };
+  return { day: `${day} ${MONTH_SHORT[mi]} ${year}`, month: `${MONTH_LONG[mi]} ${year}` };
+}
+
+function fileRow(f) {
+  const k = fileKind(f.ext);
+  const href = encodeURI(f.path);
+  const tags = f.tags || [];
+  const haystack = [f.title, f.description, f.name, k.label, tags.join(' ')].join(' ').toLowerCase();
+
+  return `
+    <article class="file-row card card-hover" data-kind="${escAttr(k.label)}"
+             data-size="${Number(f.size) || 0}" data-search="${escAttr(haystack)}">
+      <span class="file-kind file-kind--${k.tone}" aria-hidden="true">${icon(k.icon, 17)}</span>
+
+      <div class="file-main">
+        <h3 class="file-title"><a href="${href}" target="_blank" rel="noopener">${f.title}</a></h3>
+        ${f.description ? `<p class="file-desc">${f.description}</p>` : ''}
+        <p class="file-meta">
+          <span>${fileDateParts(f.added).day}</span>
+          <span class="file-dot" aria-hidden="true">·</span><span>${k.label}</span>
+          <span class="file-dot" aria-hidden="true">·</span><span>${fmtBytes(f.size)}</span>
+        </p>
+        ${tags.length ? `<div class="file-tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+      </div>
+
+      <div class="file-actions">
+        <a class="file-btn" href="${href}" target="_blank" rel="noopener"
+           aria-label="Open ${escAttr(f.title)} in a new tab">${icon('external', 14)}<span>Open</span></a>
+        <a class="file-btn file-btn--solid" href="${href}" download="${escAttr(f.name)}"
+           aria-label="Download ${escAttr(f.title)}">${icon('download', 14)}<span>Download</span></a>
+      </div>
+    </article>`;
+}
+
+function renderFiles() {
+  /* Newest first, ties broken alphabetically so the order never shuffles
+     between loads. The manifest is written sorted already; re-sorting here
+     means a hand-edited date still lands in the right place. */
+  const items = (SITE_DATA.files || []).slice().sort((a, b) =>
+    String(a.added) === String(b.added)
+      ? String(a.title).localeCompare(String(b.title))
+      : String(b.added).localeCompare(String(a.added)));
+
+  /* Walk the sorted list once and break it at each change of month. */
+  const groups = [];
+  items.forEach(f => {
+    const month = fileDateParts(f.added).month;
+    const last = groups[groups.length - 1];
+    if (last && last.month === month) last.items.push(f);
+    else groups.push({ month, items: [f] });
+  });
+
+  const kinds = [];
+  items.forEach(f => {
+    const label = fileKind(f.ext).label;
+    if (kinds.indexOf(label) === -1) kinds.push(label);
+  });
+
+  const bytes = items.reduce((n, f) => n + (Number(f.size) || 0), 0);
+  const head = pageHeader('10', 'Files', 'Files & downloads',
+    'Documents worth handing over, newest first. Everything here is served straight from the repository, so a link you save keeps working.');
+
+  document.getElementById('page-content').innerHTML = `
+    <div class="container page-enter section-pad">
+      ${head}
+
+      ${!items.length ? '<p class="files-empty">No files published yet.</p>' : `
+        <div class="files-bar reveal">
+          <label class="files-search">
+            <span class="files-search-icon" aria-hidden="true">${icon('search', 15)}</span>
+            <input type="search" id="files-q" placeholder="Search files" aria-label="Search files" autocomplete="off" />
+          </label>
+          <div class="files-chips" role="group" aria-label="Filter by file type">
+            <button type="button" class="files-chip is-on" data-kind="all" aria-pressed="true">All</button>
+            ${kinds.map(k => `<button type="button" class="files-chip" data-kind="${escAttr(k)}" aria-pressed="false">${k}</button>`).join('')}
+          </div>
+        </div>
+
+        <p class="files-count" id="files-count" role="status" aria-live="polite">${items.length} file${items.length === 1 ? '' : 's'} · ${fmtBytes(bytes)}</p>
+
+        <div class="files-list" id="files-list">
+          ${groups.map((g, gi) => `
+            <section class="files-group reveal reveal-d${Math.min(gi + 1, 4)}">
+              <h2 class="files-group-head"><span>${g.month}</span></h2>
+              <div class="files-rows">${g.items.map(fileRow).join('')}</div>
+            </section>`).join('')}
+        </div>
+
+        <p class="files-empty" id="files-empty" hidden>Nothing matches that search.</p>
+      `}
+    </div>`;
+}
+
+function initFilesFilter() {
+  const list = document.getElementById('files-list');
+  if (!list) return;
+
+  const q = document.getElementById('files-q');
+  const count = document.getElementById('files-count');
+  const empty = document.getElementById('files-empty');
+  const chips = Array.from(document.querySelectorAll('.files-chip'));
+  const rows = Array.from(list.querySelectorAll('.file-row'));
+  const groups = Array.from(list.querySelectorAll('.files-group'));
+  let kind = 'all';
+
+  function apply() {
+    const term = (q.value || '').trim().toLowerCase();
+    let shown = 0;
+    let bytes = 0;
+
+    rows.forEach(r => {
+      const on = (kind === 'all' || r.dataset.kind === kind) &&
+                 (!term || r.dataset.search.indexOf(term) !== -1);
+      r.hidden = !on;
+      if (on) { shown++; bytes += Number(r.dataset.size) || 0; }
+    });
+
+    /* A month heading with nothing under it reads as a bug, so it goes too. */
+    groups.forEach(g => { g.hidden = !g.querySelector('.file-row:not([hidden])'); });
+
+    count.textContent = `${shown} file${shown === 1 ? '' : 's'}` + (shown ? ` · ${fmtBytes(bytes)}` : '');
+    empty.hidden = shown > 0;
+  }
+
+  q.addEventListener('input', apply);
+
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    kind = chip.dataset.kind;
+    chips.forEach(other => {
+      const on = other === chip;
+      other.classList.toggle('is-on', on);
+      other.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    apply();
+  }));
+}
 
 function renderContact() {
   const d = SITE_DATA.contact;

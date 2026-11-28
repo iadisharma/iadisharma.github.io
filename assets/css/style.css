@@ -694,6 +694,115 @@ button { font: inherit; }
   margin-top: 1px;
 }
 
+/* ── EDUCATION ──────────────────────────── */
+
+.edu-section {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.edu-list { display: flex; flex-direction: column; gap: 38px; }
+
+.edu-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-soft);
+  margin-bottom: 18px;
+}
+
+.edu-id { flex: 1; min-width: 0; }
+
+.edu-institute {
+  font-family: var(--display);
+  font-size: 1.08rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.edu-degree {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-top: 3px;
+}
+
+.edu-sub {
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  color: var(--text-3);
+  margin-top: 5px;
+}
+
+.edu-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.edu-period {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.edu-grade {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.edu-group + .edu-group { margin-top: 18px; }
+
+.edu-group-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.edu-activities {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.edu-activities li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.edu-activities li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
 /* ── EXPERIENCE ─────────────────────────── */
 
 .xp { display: flex; flex-direction: column; gap: 52px; }
@@ -1586,6 +1695,15 @@ a.contact-row:hover .contact-value { color: var(--accent); }
 .reveal-d5 { transition-delay: 235ms; }
 .reveal-d6 { transition-delay: 265ms; }
 
+/* On wide screens the experience page gets a roomier column than the rest of
+   the site, and the bullets are allowed a longer measure, so the text block
+   does not trail off well short of the full-width company rule above it. */
+@media (min-width: 1140px) {
+  body[data-page="experience"] #page-content > .container { max-width: 1240px; }
+  .xp-summary { max-width: 86ch; }
+  .xp-list li { max-width: 94ch; }
+}
+
 /* ── RESPONSIVE ─────────────────────────── */
 
 @media (max-width: 960px) {
@@ -1613,6 +1731,8 @@ a.contact-row:hover .contact-value { color: var(--accent); }
   .iv-head { flex-direction: column; gap: 12px; }
   .xp-roles { padding-left: 16px; }
   .xp-role::before { left: -20.5px; }
+  .edu-head { flex-wrap: wrap; }
+  .edu-meta { flex-direction: row; align-items: center; width: 100%; gap: 10px; }
   .footer .container { flex-direction: column; text-align: center; gap: 6px; }
 }
 

@@ -50,6 +50,53 @@ const SITE_DATA = {
       { category: "Backend & Data", items: ["Node.js", "FastAPI", "Express", "ASP.NET Core", "SignalR", "REST", "GraphQL", "OAuth2", "PostgreSQL", "MongoDB", "Redis", "RabbitMQ", "Elasticsearch"], icon: "server" },
       { category: "Platform & Practices", items: ["Docker", "Kubernetes", "GitLab CI/CD", "GitHub Actions", "Azure", "Observability", "Canary releases", "Testing", "Linux"], icon: "cloud" }
     ],
+    education: [
+      {
+        institute: "Sikkim Manipal Institute of Technology",
+        org: "Sikkim Manipal University",
+        logo: "assets/images/logos/smit.png",
+        degree: "B.Tech, Computer Science and Engineering",
+        period: "2020 - 2024",
+        location: "Majitar, Sikkim, India",
+        grade: "CGPA 8.53",
+        coursework: [
+          "Data Structures", "Design & Analysis of Algorithms", "Object-Oriented Programming (C++)",
+          "C Programming", "Python Programming", "Database Management Systems", "Operating Systems",
+          "Computer Networks I & II", "Software Engineering", "Advanced Web Technologies",
+          "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Distributed Systems",
+          "Blockchain", "Compiler Design", "Formal Languages & Automata Theory",
+          "Computer Organization & Architecture", "Digital Circuits & Logic Design", "UI/UX Design",
+          "Social Network Analysis", "Probability & Statistics"
+        ],
+        labs: [
+          "Mini Project", "Major Project", "Industrial Training I & II",
+          "DBMS Lab", "Advanced Programming Lab", "Computer Networks Lab", "Intelligent System Lab"
+        ],
+        activities: [
+          "Lead, Google Developer Student Club",
+          "General Secretary, Student Council (ACCESS)",
+          "Head of IT, TEDxSMIT 2023",
+          "Head of IT, IAESTE CI SMU",
+          "Mentor, AI Club"
+        ]
+      },
+      {
+        institute: "Birla School Pilani",
+        org: "Vidya Niketan, CBSE",
+        logo: "assets/images/logos/birla-school.png",
+        degree: "Senior Secondary (Class XII), Science",
+        period: "2020",
+        location: "Pilani, Rajasthan, India",
+        coursework: ["Physics", "Chemistry", "Mathematics", "Computer Science"],
+        activities: [
+          "Captain and Lead, Atal Tinkering Lab (Student Council)",
+          "Lead, Robotics & ICT Club",
+          "House Vice Captain",
+          "School hockey team. Represented at national level and in the CBSE Hockey Clusters, winning West Zone in 2019.",
+          "Core member, Birla Innovation Hub, BITS Pilani"
+        ]
+      }
+    ],
     leadership: [
       { role: "ITDP Committee Lead", org: "Dell Technologies, Bangalore", period: "2025-2026" },
       { role: "Core Member & Event Organizer", org: "GDG Bangalore", period: "2024-Present" },
@@ -156,6 +203,50 @@ const SITE_DATA = {
             "Architected the vendor budget ingestion pipeline in Express with Redis and a background worker, acknowledging multi-MB Excel uploads in under 500ms with row-level validation and cascading upserts across 4 relational tables."
           ],
           tags: ["FastAPI", "React", "Redis", "PostgreSQL", "Express"]
+        }
+      ]
+    },
+    {
+      company: "Sikkim Manipal Institute of Technology",
+      logo: "assets/images/logos/smit.png",
+      location: "Sikkim, India",
+      span: "Jan 2023 - May 2023",
+      roles: [
+        {
+          title: "Undergraduate Student Researcher",
+          meta: "Research",
+          period: "Jan 2023 - May 2023",
+          summary: "EdgeFlow RL: learned workload distribution for decentralized edge computing.",
+          highlights: [
+            "Investigated learned workload allocation where each node splits incoming requests across local execution, forwarding to peers and rejection, subject to CPU, memory, bounded queue and forwarding capacity limits.",
+            "Characterised the control problem as a five dimensional observation over incoming load, queue headroom, forwarding capacity and two congestion flags, mapped to a three way allocation action, under a reward trading served load against congestion and rejection.",
+            "Benchmarked three policy families, PPO, SAC and neuroevolution (NEAT), under a shared Gaussian traffic scenario over 50 evaluation episodes, recording mean episode rewards of 6424 for PPO, 5258 for NEAT and -6986 for SAC.",
+            "Showed the comparison resolves into a trade-off between competing objectives rather than a single dominant policy: PPO gave the lowest congestion at 3.20 steps per episode, while NEAT gave the lowest rejection rate at 0.50%.",
+            "Built the comparative evaluation and plotting pipeline over episode level reward, rejection and congestion logs, and reported the unfavourable SAC outcome, including its unstable training returns."
+          ],
+          tags: ["Python", "Reinforcement Learning", "PPO", "SAC", "NEAT", "Gymnasium"]
+        }
+      ]
+    },
+    {
+      company: "CSIR Central Electronics Engineering Research Institute",
+      logo: "assets/images/logos/csir-ceeri.png",
+      location: "Pilani, India",
+      span: "Oct 2022 - Dec 2022",
+      roles: [
+        {
+          title: "Winter Research Intern",
+          meta: "Research",
+          period: "Oct 2022 - Dec 2022",
+          summary: "UAV-assisted edge computing: resource allocation and simulation.",
+          highlights: [
+            "Studied execution placement across UAV, fog and cloud tiers together with the split between traditional and non-volatile memory, under coverage, latency deadline, memory and energy cost constraints.",
+            "Evaluated a stable-matching style allocator ordering user preferences by latency and server resource blocks by profit. On the saved 700 user scenario it recorded total system profit of 2217.5 against 661.4 for the DTS baseline.",
+            "Used a Gurobi mixed integer formulation, with binary placement variables and continuous memory fractions maximizing revenue minus energy cost subject to latency and memory constraints, as the 3015.1 reference point against which the heuristic was read.",
+            "Ran sensitivity sweeps across user count, bandwidth, energy price and memory latency ratio, preserving comparative outputs for each operating condition.",
+            "Implemented an exploratory PyTorch DQN for UAV positioning, with experience replay, target networks and nine discrete moves per UAV, over a custom Gymnasium environment."
+          ],
+          tags: ["Python", "Gurobi", "PyTorch", "DQN", "Gymnasium"]
         }
       ]
     },

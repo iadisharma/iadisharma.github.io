@@ -186,6 +186,15 @@ function renderHome() {
 
 /* ── ABOUT ──────────────────────────────── */
 
+function eduTags(label, items) {
+  if (!items || !items.length) return '';
+  return `
+    <div class="edu-group">
+      <span class="edu-group-label">${label}</span>
+      <div class="skill-tags">${items.map(t => `<span class="skill-tag">${t}</span>`).join('')}</div>
+    </div>`;
+}
+
 function renderAbout() {
   const d = SITE_DATA.about;
 
@@ -211,6 +220,38 @@ function renderAbout() {
         </div>
       </div>
 
+      <section class="edu-section">
+        <h3 class="leadership-head">Education</h3>
+        <div class="edu-list">
+          ${(d.education || []).map((e, i) => `
+            <article class="edu-item reveal reveal-d${Math.min(i + 1, 4)}">
+              <header class="edu-head">
+                ${logoTile(e.logo, e.institute, ' logo-tile--lg')}
+                <div class="edu-id">
+                  <h4 class="edu-institute">${e.institute}</h4>
+                  <p class="edu-degree">${e.degree}</p>
+                  <p class="edu-sub">${e.org} · ${e.location}</p>
+                </div>
+                <div class="edu-meta">
+                  <span class="edu-period">${e.period}</span>
+                  ${e.grade ? `<span class="edu-grade">${e.grade}</span>` : ''}
+                </div>
+              </header>
+
+              ${eduTags('Relevant coursework', e.coursework)}
+              ${eduTags('Projects &amp; labs', e.labs)}
+
+              ${e.activities && e.activities.length ? `
+                <div class="edu-group">
+                  <span class="edu-group-label">Activities &amp; societies</span>
+                  <ul class="edu-activities">
+                    ${e.activities.map(a => `<li>${a}</li>`).join('')}
+                  </ul>
+                </div>` : ''}
+            </article>`).join('')}
+        </div>
+      </section>
+
       <section class="leadership-section">
         <h3 class="leadership-head">Leadership &amp; Community</h3>
         <div class="leadership-grid">
@@ -235,7 +276,7 @@ function renderExperience() {
   document.getElementById('page-content').innerHTML = `
     <div class="container page-enter section-pad">
       ${pageHeader('02', 'Experience', "Where I've worked",
-        'Order management at Nike, enterprise platforms and applied AI at Dell, robotics research before that.')}
+        'Order management at Nike, enterprise platforms and applied AI at Dell, reinforcement learning and robotics research before that.')}
 
       <div class="xp">
         ${groups.map((g, gi) => `
@@ -568,25 +609,39 @@ function initMobileNav() {
 /* ── SCROLL REVEAL ──────────────────────── */
 
 function initScrollReveal() {
-  const items = document.querySelectorAll('.reveal');
+  const items = Array.from(document.querySelectorAll('.reveal'));
   if (!items.length) return;
+
+  const show = el => el.classList.add('visible');
 
   if (!('IntersectionObserver' in window) ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    items.forEach(el => el.classList.add('visible'));
+    items.forEach(show);
     return;
   }
 
+  // Anything starting within 1.5 viewports is revealed up front rather than
+  // waiting for a scroll. Without this a section that ends near the fold looks
+  // like the end of the page, because whatever follows it sits at opacity 0.
+  const preload = window.innerHeight * 1.5;
+  const pending = items.filter(el => {
+    if (el.getBoundingClientRect().top < preload) { show(el); return false; }
+    return true;
+  });
+  if (!pending.length) return;
+
+  // Deeper content still animates in, but is revealed a good margin before it
+  // scrolls into view so it is never caught mid-fade.
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
+        show(e.target);
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px 40% 0px' });
 
-  items.forEach(el => obs.observe(el));
+  pending.forEach(el => obs.observe(el));
 }
 
 /* ── LIGHTBOX ───────────────────────────── */
